@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Mini site để test domain mới trên Vercel."
+    />
+    <title>Domain Check on Vercel</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #07111f;
+        --bg-2: #0b1d33;
+        --card: rgba(8, 15, 26, 0.72);
+        --card-border: rgba(255, 255, 255, 0.12);
+        --text: #eaf2ff;
+        --muted: #9fb4d2;
+        --accent: #7dd3fc;
+        --accent-2: #a78bfa;
+        --success: #34d399;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+
+      body {
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(125, 211, 252, 0.2), transparent 34%),
+          radial-gradient(circle at right top, rgba(167, 139, 250, 0.22), transparent 28%),
+          linear-gradient(160deg, var(--bg), var(--bg-2) 58%, #050b14);
+      }
+
+      .wrap {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 32px 20px;
+      }
+
+      .card {
+        width: min(900px, 100%);
+        border: 1px solid var(--card-border);
+        border-radius: 28px;
+        background: var(--card);
+        backdrop-filter: blur(18px);
+        box-shadow:
+          0 20px 80px rgba(0, 0, 0, 0.35),
+          inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        overflow: hidden;
+      }
+
+      .hero {
+        padding: clamp(28px, 5vw, 56px);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--muted);
+        font-size: 14px;
+        letter-spacing: 0.02em;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: var(--success);
+        box-shadow: 0 0 0 6px rgba(52, 211, 153, 0.16);
+      }
+
+      h1 {
+        margin: 20px 0 12px;
+        font-size: clamp(40px, 7vw, 72px);
+        line-height: 0.94;
+        letter-spacing: -0.05em;
+      }
+
+      .lead {
+        max-width: 58ch;
+        margin: 0;
+        color: var(--muted);
+        font-size: clamp(16px, 2.1vw, 20px);
+        line-height: 1.65;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .tile {
+        padding: 18px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--muted);
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .value {
+        font-size: 16px;
+        line-height: 1.5;
+        word-break: break-word;
+      }
+
+      .accent {
+        color: var(--accent);
+      }
+
+      .accent-2 {
+        color: var(--accent-2);
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 0 28px 28px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .pill {
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(125, 211, 252, 0.12);
+        color: var(--accent);
+        border: 1px solid rgba(125, 211, 252, 0.2);
+      }
+
+      @media (max-width: 720px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .footer {
+          padding-inline: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <section class="card" aria-labelledby="title">
+        <div class="hero">
+          <div class="eyebrow">
+            <span class="dot" aria-hidden="true"></span>
+            Vercel domain smoke test
+          </div>
+
+          <h1 id="title">
+            Domain mới của bạn
+            <span class="accent">đang trỏ đúng</span>
+            nếu bạn thấy trang này.
+          </h1>
+
+          <p class="lead">
+            Đây là project test cực nhỏ để bạn deploy lên Vercel, gắn domain mới,
+            rồi kiểm tra DNS, SSL và routing một cách nhanh gọn. Không có backend,
+            không có phụ thuộc nặng, chỉ có một trang xác nhận rõ ràng.
+          </p>
+
+          <div class="grid">
+            <div class="tile">
+              <span class="label">Mục tiêu</span>
+              <div class="value">Kiểm tra domain mới trên Vercel</div>
+            </div>
+            <div class="tile">
+              <span class="label">Loại project</span>
+              <div class="value accent">Static site tối giản</div>
+            </div>
+            <div class="tile">
+              <span class="label">Trạng thái</span>
+              <div class="value accent-2">Ready to deploy</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div>Tip: trỏ root folder của Vercel vào `vercel/`.</div>
+          <div class="pill" id="host-pill">Checking host...</div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const host = window.location.hostname || "localhost";
+      const pill = document.getElementById("host-pill");
+      pill.textContent = `Served from: ${host}`;
+    </script>
+  </body>
+</html>
