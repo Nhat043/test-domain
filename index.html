@@ -8,6 +8,14 @@
       content="Mini site để test domain mới trên Vercel."
     />
     <title>Domain Check on Vercel</title>
+    <!-- Google tag (GA4): Measurement ID is public; do not put API secrets here. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C321PKEXLG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-C321PKEXLG');
+    </script>
     <style>
       :root {
         color-scheme: dark;
@@ -156,6 +164,37 @@
         border: 1px solid rgba(125, 211, 252, 0.2);
       }
 
+      .practice-panel {
+        margin-top: 26px;
+        padding: 18px;
+        border-radius: 20px;
+        border: 1px solid rgba(125, 211, 252, 0.25);
+        background: rgba(125, 211, 252, 0.08);
+      }
+
+      .practice-panel p {
+        margin: 8px 0 0;
+        color: var(--muted);
+      }
+
+      .practice-button {
+        margin-top: 14px;
+        padding: 10px 14px;
+        border: 0;
+        border-radius: 10px;
+        background: var(--accent);
+        color: #062033;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .practice-result {
+        min-height: 24px;
+        margin-top: 10px !important;
+        color: var(--success) !important;
+      }
+
       @media (max-width: 720px) {
         .grid {
           grid-template-columns: 1fr;
@@ -188,6 +227,15 @@
             không có phụ thuộc nặng, chỉ có một trang xác nhận rõ ràng.
           </p>
 
+          <section class="practice-panel" aria-labelledby="utm-title">
+            <strong id="utm-title">GA4 + UTM practice</strong>
+            <p id="utm-status">Đang đọc UTM từ URL...</p>
+            <button class="practice-button" id="lead-button" type="button">
+              Mô phỏng gửi form đặt lịch
+            </button>
+            <p class="practice-result" id="lead-result" aria-live="polite"></p>
+          </section>
+
           <div class="grid">
             <div class="tile">
               <span class="label">Mục tiêu</span>
@@ -215,6 +263,28 @@
       const host = window.location.hostname || "localhost";
       const pill = document.getElementById("host-pill");
       pill.textContent = `Served from: ${host}`;
+
+      // GA4 automatically reads these UTM values when the Google tag loads.
+      // This UI only makes the attribution visible for interview practice.
+      const params = new URLSearchParams(window.location.search);
+      const attribution = {
+        source: params.get("utm_source") || "(direct)",
+        medium: params.get("utm_medium") || "(none)",
+        campaign: params.get("utm_campaign") || "(not set)",
+        content: params.get("utm_content") || "(not set)",
+      };
+      document.getElementById("utm-status").textContent =
+        `UTM hiện tại: ${attribution.source} / ${attribution.medium} — campaign: ${attribution.campaign}; content: ${attribution.content}`;
+
+      document.getElementById("lead-button").addEventListener("click", () => {
+        // No name, phone, email, or other PII is sent to GA4.
+        gtag("event", "generate_lead", {
+          lead_source: attribution.source,
+          service: "utm_ga4_practice",
+        });
+        document.getElementById("lead-result").textContent =
+          "Đã gửi event generate_lead vào GA4. Mở Realtime để kiểm tra.";
+      });
     </script>
   </body>
 </html>
