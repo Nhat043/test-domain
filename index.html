@@ -189,6 +189,29 @@
         cursor: pointer;
       }
 
+      .lead-form {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .lead-form input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        color: var(--text);
+        background: rgba(7, 17, 31, 0.75);
+        font: inherit;
+      }
+
+      .lead-form .practice-button {
+        grid-column: 1 / -1;
+        justify-self: start;
+        margin-top: 0;
+      }
+
       .practice-result {
         min-height: 24px;
         margin-top: 10px !important;
@@ -202,6 +225,10 @@
 
         .footer {
           padding-inline: 20px;
+        }
+
+        .lead-form {
+          grid-template-columns: 1fr;
         }
       }
     </style>
@@ -230,9 +257,11 @@
           <section class="practice-panel" aria-labelledby="utm-title">
             <strong id="utm-title">GA4 + UTM practice</strong>
             <p id="utm-status">Đang đọc UTM từ URL...</p>
-            <button class="practice-button" id="lead-button" type="button">
-              Mô phỏng gửi form đặt lịch
-            </button>
+            <form class="lead-form" id="lead-form">
+              <input id="lead-name" name="name" required placeholder="Họ tên" autocomplete="name" />
+              <input id="lead-phone" name="phone" required placeholder="Số điện thoại" inputmode="tel" autocomplete="tel" />
+              <button class="practice-button" type="submit">Gửi form đặt lịch</button>
+            </form>
             <p class="practice-result" id="lead-result" aria-live="polite"></p>
           </section>
 
@@ -276,7 +305,9 @@
       document.getElementById("utm-status").textContent =
         `UTM hiện tại: ${attribution.source} / ${attribution.medium} — campaign: ${attribution.campaign}; content: ${attribution.content}`;
 
-      document.getElementById("lead-button").addEventListener("click", () => {
+      document.getElementById("lead-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        // In a real app: POST the form fields + attribution to /api/leads.
         // No name, phone, email, or other PII is sent to GA4.
         gtag("event", "generate_lead", {
           lead_source: attribution.source,
